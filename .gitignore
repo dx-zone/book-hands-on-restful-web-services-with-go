@@ -1,0 +1,32 @@
+# Binaries and compiled object files
+bin/
+obj/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go dependencies and toolchain
+vendor/
+go.sum
+# Note: keep go.mod!
+
+# Docker and Swagger UI
+.docker-tmp/
+# If you ever generate the JSON from code:
+# api/openapi.json 
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+

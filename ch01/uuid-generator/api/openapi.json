@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: Simple Health Check API
+  version: 1.0.0
+  description: |
+    Minimal API exposing a health check endpoint that returns the current server time as plain text.
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns the current server date and time as plain text.
+      operationId: getHealthCheck
+      responses:
+        '200':
+          description: Current server time returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "2026-03-26 19:37:46.123456789 -0400 EDT m=+12.345678901"
+
+components: {}

@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Random Number API",
+    "description": "A simple API providing random floats and integers.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/randomFloat": {
+      "get": {
+        "summary": "Get a random float",
+        "description": "Returns a random float64 value between 0.0 and 1.0.",
+        "responses": {
+          "200": {
+            "description": "A random float value",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0.123456789"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/randomInt": {
+      "get": {
+        "summary": "Get a random integer",
+        "description": "Returns a random integer between 0 and 99.",
+        "responses": {
+          "200": {
+            "description": "A random integer value",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "42"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
