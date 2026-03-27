@@ -1,0 +1,4 @@
+domain/fqdn,dns_provider,email
+example.com,Cloudflare,admin@example.com
+test.com,GoDaddy,admin@test.com
+mywebsite.com,Namecheap,admin@mywebsite.com

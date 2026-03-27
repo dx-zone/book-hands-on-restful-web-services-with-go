@@ -1,0 +1,82 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Lightweight Router API",
+    "description": "API using httprouter to execute system commands and return Go version, file contents, or directory listings.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/v1/go-version": {
+      "get": {
+        "summary": "Get Go version",
+        "description": "Executes 'go version' on the server and returns the output.",
+        "responses": {
+          "200": {
+            "description": "Go version string",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "go version go1.22.1 linux/amd64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/show-file/{name}": {
+      "get": {
+        "summary": "Show file content",
+        "description": "Executes 'cat' on the specified file name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "The name of the file to display",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The contents of the requested file",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/list-dir": {
+      "get": {
+        "summary": "List directory",
+        "description": "Executes 'ls -l' and returns the long-format directory listing.",
+        "responses": {
+          "200": {
+            "description": "Directory listing output",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
