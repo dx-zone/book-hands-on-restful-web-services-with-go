@@ -1,0 +1,92 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Gorilla Mux Article API",
+    "description": "A simple API demonstrating path-based and query-based routing with Gorilla Mux.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/path-based/articles/{category}/{id}": {
+      "get": {
+        "summary": "Get article by path variables",
+        "description": "Matches a category string and a numeric ID using regex in the path.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Numeric ID only",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category and ID details",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Category is: birds\nID is: 1234\n"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query-based/articles": {
+      "get": {
+        "summary": "Get article by query parameters",
+        "description": "Extracts 'id' and 'category' from the URL query string.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Parsed query parameters",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Got parameter id: 1345!\nGot parameter category: birds!"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
