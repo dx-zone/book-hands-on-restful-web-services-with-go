@@ -1,0 +1,80 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Static File Server API",
+    "description": "API using httprouter to serve static files from the local filesystem.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/{filepath}": {
+      "get": {
+        "summary": "Serve files from the /api directory",
+        "parameters": [
+          {
+            "name": "filepath",
+            "in": "path",
+            "required": true,
+            "description": "Path to the file within the api directory",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested file",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found"
+          }
+        }
+      }
+    },
+    "/{filepath}": {
+      "get": {
+        "summary": "Serve files from the root directory",
+        "parameters": [
+          {
+            "name": "filepath",
+            "in": "path",
+            "required": true,
+            "description": "Path to the file from the system root",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested file",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found"
+          }
+        }
+      }
+    }
+  }
+}
