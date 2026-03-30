@@ -2,20 +2,19 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Gorilla Mux Article API",
-    "description": "A simple API demonstrating path-based and query-based routing with Gorilla Mux.",
+    "description": "A simple RESTful API demonstrating path-based and query-based matching using Gorilla Mux.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:8000",
+      "url": "http://127.0.0.1:8000",
       "description": "Local development server"
     }
   ],
   "paths": {
     "/path-based/articles/{category}/{id}": {
       "get": {
-        "summary": "Get article by path variables",
-        "description": "Matches a category string and a numeric ID using regex in the path.",
+        "summary": "Path-based article retrieval",
         "parameters": [
           {
             "name": "category",
@@ -29,21 +28,20 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Numeric ID only",
             "schema": {
-              "type": "string",
+              "type": "integer",
               "pattern": "^[0-9]+$"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Category and ID details",
+            "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
                   "type": "string",
-                  "example": "Category is: birds\nID is: 1234\n"
+                  "example": "Category is: books\nID is: 123"
                 }
               }
             }
@@ -53,11 +51,10 @@
     },
     "/query-based/articles": {
       "get": {
-        "summary": "Get article by query parameters",
-        "description": "Extracts 'id' and 'category' from the URL query string.",
+        "summary": "Query-based article retrieval",
         "parameters": [
           {
-            "name": "id",
+            "name": "category",
             "in": "query",
             "required": true,
             "schema": {
@@ -65,7 +62,7 @@
             }
           },
           {
-            "name": "category",
+            "name": "id",
             "in": "query",
             "required": true,
             "schema": {
@@ -75,12 +72,65 @@
         ],
         "responses": {
           "200": {
-            "description": "Parsed query parameters",
+            "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
                   "type": "string",
-                  "example": "Got parameter id: 1345!\nGot parameter category: birds!"
+                  "example": "Got parameter id: 123!\nGot parameter category: books!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reverse-mapping/articles/{category}/{id}": {
+      "get": {
+        "summary": "Reverse mapping article retrieval",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "pattern": "^[0-9]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/": {
+      "get": {
+        "summary": "Strict slash matching article retrieval",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }

@@ -24,6 +24,28 @@ func main() {
 	// Query-based matching with variables and regular expressions
 	r.HandleFunc("/query-based/articles", QueryHandler)
 
+	// Reverse mapping: Generate a URL from the route name and variables
+	r.HandleFunc("/reverse-mapping/articles/{category}/{id:[0-9]+}", ArticleHandler).Name("articleRoute")
+	// Generate a URL for the "articleRoute" with the specified variables
+	url, err := r.Get("articleRoute").URL("category", "books", "id", "123")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf(url.Path) // Output: /reverse-mapping/articles/books/123
+
+	// PathPrefix and StripPrefix
+	// Use PathPrefix to match all routes that start with /static/ and serve files from the ./static directory
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("/tmp/static"))))
+
+	// strict slash: Redirects requests with a trailing slash to the same path without the slash, and vice versa.
+	// For example, if you have a route defined as /articles and a request comes in for /articles/, it will redirect to /articles.
+	r.StrictSlash(true)
+	r.Path("/articles/").Handler(http.HandlerFunc(ArticleHandler))
+
+	// Match encoded paths: By default, Gorilla Mux does not match encoded paths. You can enable this feature by setting the UseEncodedPath option to true.
+	r.UseEncodedPath()
+	r.NewRoute().Path("category/id")
+
 	// Bind to a port and pass our router into our http.Server
 	srv := &http.Server{
 		Handler:      r,
